@@ -56,3 +56,33 @@ Run `python -m unittest discover tests` from the project root.
 4. Implement a confidence score for each identified recurring transaction
 
 
+## Bonus Discussion
+
+### a. Measuring the Accuracy of the Approach
+To measure the accuracy of our approach, we could:
+
+1. Use a labeled dataset: Create a dataset with manually labeled recurring and non-recurring transactions. Compare our algorithm's results against these labels to calculate precision, recall, and F1 score
+2. User feedback: Implement a feedback mechanism where users can flag incorrectly identified recurring transactions
+3. Edge case testing: Develop a set of edge cases (e.g., transactions with irregular intervals, similar descriptions but different purposes) and evaluate the algorithm's performance on these.
+
+### b. Assessing Material Impact on Customers
+
+To determine if solving this problem made a material impact on customers, we could:
+1. User engagement metrics: Track how often customers interact with the recurring transaction feature and for how long.
+2. Customer feedback: Conduct surveys or interviews to gather qualitative feedback on the feature's usefulness.
+3. Retention rates: Compare retention rates between users who frequently use the recurring transaction feature and those who don't.
+
+### c. Deploying the Solution
+
+To deploy this solution, we would:
+
+1. Containerization: Use Docker to containerize the application.
+2. Cloud deployment: Deploy the containerized application to a cloud platform like AWS, Google Cloud, or Azure.
+4. API Gateway: Implement an API Gateway to handle request routing.
+
+### d. Other Approaches to Investigate
+
+Given more time, we could explore:
+
+1. Machine Learning models: Implement supervised learning models (e.g., Random Forests, Gradient Boosting) to classify transactions based on various features.
+2. Fuzzy matching: Implement fuzzy matching algorithms to better handle slight variations in transaction descriptions.
