@@ -4,8 +4,6 @@ from datetime import datetime
 from .utils import parse_date, calculate_days_between
 import re
 
-
-
 def group_transactions(transactions: List[Dict]) -> Dict[str, List[Dict]]:
     groups = defaultdict(list)
     for transaction in transactions:
