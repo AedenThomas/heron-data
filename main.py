@@ -1,15 +1,11 @@
-from src.identify_recurring_transactions import identify_recurring_transactions
+from src.identify_recurring_transactions import identify_recurring_transactions, group_transactions
 from src.utils import load_transactions
-from collections import defaultdict
 
 def main():
     transactions = load_transactions('transactions.json')
     recurring = identify_recurring_transactions(transactions)
     
-    grouped_recurring = defaultdict(list)
-    for transaction in recurring:
-        key = transaction['description'].lower().split(':')[0]
-        grouped_recurring[key].append(transaction)
+    grouped_recurring = group_transactions(recurring)
     
     print(f"Found {len(recurring)} recurring transactions in {len(grouped_recurring)} groups:")
     for key, group in grouped_recurring.items():
