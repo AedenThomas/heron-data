@@ -34,7 +34,7 @@ def identify_recurring_transactions(transactions: List[Dict]) -> List[Dict]:
     recurring_transactions = []
     
     for key, group in grouped_transactions.items():
-        print(f"Analyzing group: {key} with {len(group)} transactions")  # Debug print
+        # print(f"Analyzing group: {key} with {len(group)} transactions")  # Debug print
         
         sorted_group = sorted(group, key=lambda x: parse_date(x['date']))
         intervals = [
@@ -42,23 +42,21 @@ def identify_recurring_transactions(transactions: List[Dict]) -> List[Dict]:
             for i in range(len(sorted_group) - 1)
         ]
         
-        print(f"Intervals for {key}: {intervals}")  # Debug print
+        # print(f"Intervals for {key}: {intervals}")  # Debug print
         
-        if len(group) >= 3:  # Check for patterns with at least 3 transactions
+        if len(group) >= 2:  # Changed from 3 to 2
             avg_interval = sum(intervals) / len(intervals)
             if 25 <= avg_interval <= 35:  # Monthly (allowing more variation)
                 recurring_transactions.extend(sorted_group)
-                print(f"Added {key} as recurring (monthly, avg interval: {avg_interval})")
+                # print(f"Added {key} as recurring (monthly, avg interval: {avg_interval})")
             elif 6 <= avg_interval <= 8:  # Weekly
                 recurring_transactions.extend(sorted_group)
-                print(f"Added {key} as recurring (weekly, avg interval: {avg_interval})")
+                # print(f"Added {key} as recurring (weekly, avg interval: {avg_interval})")
             else:
                 # Check if at least 75% of intervals are within 28-35 days (monthly with more flexibility)
                 monthly_count = sum(1 for interval in intervals if 28 <= interval <= 35)
                 if monthly_count >= len(intervals) * 0.75:
                     recurring_transactions.extend(sorted_group)
-                    print(f"Added {key} as recurring (flexible monthly pattern)")
+                    # print(f"Added {key} as recurring (flexible monthly pattern)")
     
     return recurring_transactions
-
-
