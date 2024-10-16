@@ -6,7 +6,6 @@ def main():
     transactions = load_transactions('transactions.json')
     recurring = identify_recurring_transactions(transactions)
     
-    # Group recurring transactions by description
     grouped_recurring = defaultdict(list)
     for transaction in recurring:
         key = transaction['description'].lower().split(':')[0]
