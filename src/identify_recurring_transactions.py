@@ -4,14 +4,15 @@ from datetime import datetime
 from .utils import parse_date, calculate_days_between
 
 def identify_recurring_transactions(transactions: List[Dict]) -> List[Dict]:
-    # Group transactions by description
+    # Group transactions by similar descriptions
     grouped_transactions = defaultdict(list)
     for transaction in transactions:
-        grouped_transactions[transaction['description']].append(transaction)
+        key = transaction['description'].lower().split(':')[0]  # Group by first part of description
+        grouped_transactions[key].append(transaction)
     
     recurring_transactions = []
     
-    for description, group in grouped_transactions.items():
+    for group in grouped_transactions.values():
         if len(group) < 2:
             continue
         
@@ -25,9 +26,11 @@ def identify_recurring_transactions(transactions: List[Dict]) -> List[Dict]:
         ]
         
         # Check if intervals are consistent
-        if len(set(intervals)) == 1 and intervals[0] <= 31:  # Assuming monthly or more frequent
-            recurring_transactions.extend(sorted_group)
-        elif len(set(intervals)) <= 2 and max(intervals) <= 32:  # Allow some flexibility
-            recurring_transactions.extend(sorted_group)
+        if len(set(intervals)) <= 2:  # Allow some flexibility
+            avg_interval = sum(intervals) / len(intervals)
+            if 25 <= avg_interval <= 35:  # Monthly
+                recurring_transactions.extend(sorted_group)
+            elif 6 <= avg_interval <= 8:  # Weekly
+                recurring_transactions.extend(sorted_group)
     
     return recurring_transactions
